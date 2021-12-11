@@ -34,13 +34,10 @@ public class WeatherCity {
     @Column(name = "wind_speed", nullable = false)
     private String windSpeed;
 
-    @Column(name = "gust", nullable = false)
-    private String gust;
-
     public WeatherCity() {}
 
     public WeatherCity(String cityName, String weatherDescription, String feelsLike, String tempMax,
-                       String pressure, String humidity, String windSpeed, String gust) {
+                       String pressure, String humidity, String windSpeed) {
         this.cityName = cityName;
         this.weatherDescription = weatherDescription;
         this.feelsLike = feelsLike;
@@ -48,7 +45,6 @@ public class WeatherCity {
         this.pressure = pressure;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
-        this.gust = gust;
     }
 
     public void setWeatherCity(WeatherCity weatherCity) {
@@ -58,7 +54,6 @@ public class WeatherCity {
         setPressure(weatherCity.getPressure());
         setHumidity(weatherCity.getHumidity());
         setWindSpeed(weatherCity.getWindSpeed());
-        setGust(weatherCity.getGust());
     }
 
     public Long getId() {
@@ -123,13 +118,5 @@ public class WeatherCity {
 
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
-    }
-
-    public String getGust() {
-        return gust;
-    }
-
-    public void setGust(String gust) {
-        this.gust = gust;
     }
 }
