@@ -1,0 +1,69 @@
+package com.example.weather.dao;
+
+import com.example.weather.model.WeatherCity;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class WeatherCityDaoImpl implements WeatherCityDao {
+
+    private final SessionFactory sessionFactory;
+
+    public WeatherCityDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public void create(WeatherCity weatherCity) throws HibernateException {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                session.save(weatherCity);
+                transaction.commit();
+            } catch (HibernateException e) {
+                if (transaction != null) transaction.rollback();
+                throw e;
+            }
+        }
+    }
+
+    @Override
+    public void update(WeatherCity weatherCity) throws HibernateException {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                WeatherCity wc = session.get(WeatherCity.class, weatherCity.getCityName());
+                wc.setWeatherCity(weatherCity);
+                session.update(wc);
+                transaction.commit();
+            } catch (HibernateException e) {
+                if (transaction != null) transaction.rollback();
+                throw e;
+            }
+        }
+    }
+
+    @Override
+    public WeatherCity get(String city) throws HibernateException {
+        WeatherCity weatherCity;
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                weatherCity = session.get(WeatherCity.class, city);
+                transaction.commit();
+            } catch (HibernateException e) {
+                if (transaction != null) transaction.rollback();
+                throw e;
+            }
+        }
+
+        return weatherCity;
+    }
+}

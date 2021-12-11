@@ -51,6 +51,16 @@ public class WeatherCity {
         this.gust = gust;
     }
 
+    public void setWeatherCity(WeatherCity weatherCity) {
+        setWeatherDescription(weatherCity.getWeatherDescription());
+        setFeelsLike(weatherCity.getFeelsLike());
+        setTempMax(weatherCity.getTempMax());
+        setPressure(weatherCity.getPressure());
+        setHumidity(weatherCity.getHumidity());
+        setWindSpeed(weatherCity.getWindSpeed());
+        setGust(weatherCity.getGust());
+    }
+
     public Long getId() {
         return id;
     }
