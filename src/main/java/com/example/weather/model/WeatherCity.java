@@ -25,6 +25,12 @@ public class WeatherCity {
     @Column(name = "temp_max", nullable = false)
     private String tempMax;
 
+    @Column(name = "temp_min", nullable = false)
+    private String tempMin;
+
+    @Column(name = "temp", nullable = false)
+    private String temp;
+
     @Column(name = "pressure", nullable = false)
     private String pressure;
 
@@ -37,7 +43,7 @@ public class WeatherCity {
     public WeatherCity() {}
 
     public WeatherCity(String cityName, String weatherDescription, String feelsLike, String tempMax,
-                       String pressure, String humidity, String windSpeed) {
+                       String pressure, String humidity, String windSpeed, String tempMin, String temp) {
         this.cityName = cityName;
         this.weatherDescription = weatherDescription;
         this.feelsLike = feelsLike;
@@ -45,6 +51,8 @@ public class WeatherCity {
         this.pressure = pressure;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
+        this.tempMin = tempMin;
+        this.temp = temp;
     }
 
     public void setWeatherCity(WeatherCity weatherCity) {
@@ -54,6 +62,24 @@ public class WeatherCity {
         setPressure(weatherCity.getPressure());
         setHumidity(weatherCity.getHumidity());
         setWindSpeed(weatherCity.getWindSpeed());
+        setTemp(weatherCity.getTemp());
+        setTempMin(weatherCity.getTempMin());
+    }
+
+    public String getTemp() {
+        return temp;
+    }
+
+    public void setTemp(String temp) {
+        this.temp = temp;
+    }
+
+    public String getTempMin() {
+        return tempMin;
+    }
+
+    public void setTempMin(String tempMin) {
+        this.tempMin = tempMin;
     }
 
     public Long getId() {

@@ -43,7 +43,9 @@ public class WeatherCityApiServiceImpl implements WeatherCityApiService {
                 map.get("temp_max"),
                 map.get("pressure"),
                 map.get("humidity"),
-                map.get("speed")
+                map.get("speed"),
+                map.get("temp_min"),
+                map.get("temp")
         );
     }
 
@@ -65,8 +67,8 @@ public class WeatherCityApiServiceImpl implements WeatherCityApiService {
                     string = StringUtils.remove(string, "[");
                     string = StringUtils.remove(string, "]");
                     string = StringUtils.remove(string, "\"");
-                    string = StringUtils.remove(string, "\"main\":");
-                    string = StringUtils.remove(string, "\"wind\":");
+                    string = StringUtils.remove(string, "main:");
+                    string = StringUtils.remove(string, "wind:");
                     return string;
                 })
                 .filter(str -> StringUtils.startsWithAny(str, "description", "temp", "feels_like", "temp_min", "temp_max", "pressure", "humidity", "speed", "name"))
