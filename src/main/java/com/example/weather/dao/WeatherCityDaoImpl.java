@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class WeatherCityDaoImpl implements WeatherCityDao {
 
@@ -57,6 +59,25 @@ public class WeatherCityDaoImpl implements WeatherCityDao {
             try {
                 transaction = session.beginTransaction();
                 weatherCity = session.get(WeatherCity.class, city);
+                transaction.commit();
+            } catch (HibernateException e) {
+                if (transaction != null) transaction.rollback();
+                throw e;
+            }
+        }
+
+        return weatherCity;
+    }
+
+    @Override
+    public List<WeatherCity> getAll() {
+        List<WeatherCity> weatherCity;
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                weatherCity = session.createQuery("FROM WeatherCity", WeatherCity.class).list();
                 transaction.commit();
             } catch (HibernateException e) {
                 if (transaction != null) transaction.rollback();
