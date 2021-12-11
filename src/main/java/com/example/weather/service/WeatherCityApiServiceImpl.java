@@ -2,6 +2,7 @@ package com.example.weather.service;
 
 import com.example.weather.model.WeatherCity;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,6 +17,10 @@ import java.util.stream.Stream;
 
 @Service
 public class WeatherCityApiServiceImpl implements WeatherCityApiService {
+
+    @Value("${x-rapidapi-key.value}")
+    private String key;
+
     @Override
     public WeatherCity getCityFromApi(String city) throws IOException, InterruptedException {
         HttpResponse<String> response;
@@ -46,7 +51,7 @@ public class WeatherCityApiServiceImpl implements WeatherCityApiService {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://community-open-weather-map.p.rapidapi.com/weather?q="+city+"&lat=0&lon=0&lang=null&units=metric"))
                 .header("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-                .header("x-rapidapi-key", "d15ff5c4camshb110b269573a501p14a0aejsne278af60f136")
+                .header("x-rapidapi-key", key)
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         return HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
