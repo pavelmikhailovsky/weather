@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @Repository
@@ -51,16 +52,18 @@ public class WeatherCityDaoImpl implements WeatherCityDao {
     }
 
     @Override
-    public WeatherCity get(String city) throws HibernateException {
+    public WeatherCity get(String city) throws PersistenceException {
         WeatherCity weatherCity;
 
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
             try {
                 transaction = session.beginTransaction();
-                weatherCity = session.get(WeatherCity.class, city);
+                weatherCity = session.createQuery(
+                        "from WeatherCity as city where city.cityName='"+city+"'", WeatherCity.class
+                ).getSingleResult();
                 transaction.commit();
-            } catch (HibernateException e) {
+            } catch (PersistenceException e) {
                 if (transaction != null) transaction.rollback();
                 throw e;
             }

@@ -2,9 +2,9 @@ package com.example.weather.service;
 
 import com.example.weather.dao.WeatherCityDao;
 import com.example.weather.model.WeatherCity;
-import org.hibernate.HibernateException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.PersistenceException;
 import java.io.IOException;
 
 @Service
@@ -28,7 +28,7 @@ public class WeatherCityServiceImpl implements WeatherCityService {
 
         try {
             weatherCity = weatherCityDao.get(city);
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             weatherCity = weatherCityApiService.getCityFromApi(city);
             weatherCityDao.create(weatherCity);
             return weatherCity;
