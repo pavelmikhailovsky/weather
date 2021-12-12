@@ -12,14 +12,18 @@ public class WeatherCityServiceImpl implements WeatherCityService {
 
     private final WeatherCityApiService weatherCityApiService;
     private final WeatherCityDao weatherCityDao;
+    private final UpdatingInformationDatabaseService updatingInformationDatabaseService;
 
-    public WeatherCityServiceImpl(WeatherCityApiService weatherCityApiService, WeatherCityDao weatherCityDao) {
+    public WeatherCityServiceImpl(WeatherCityApiService weatherCityApiService, WeatherCityDao weatherCityDao, UpdatingInformationDatabaseService upd) {
         this.weatherCityApiService = weatherCityApiService;
         this.weatherCityDao = weatherCityDao;
+        this.updatingInformationDatabaseService = upd;
+
     }
 
     @Override
     public WeatherCity getWeatherCity(String city) throws IOException, InterruptedException {
+        updatingInformationDatabaseService.updating();
         WeatherCity weatherCity;
 
         try {
