@@ -24,7 +24,7 @@ public class WeatherCityServiceTests {
     private WeatherCityServiceImpl weatherCityService;
 
     @Test
-    void it_should_return_weather_city_which_is_in_db() throws Exception{
+    void itShouldReturnWeatherCityWhichIsInDb() throws Exception {
         given(weatherCityDao.get(eq("London"))).willReturn(
                 new WeatherCity("London", "clouds",
                         "1", "1", "1", "1", "1", "1", "1")
@@ -34,7 +34,7 @@ public class WeatherCityServiceTests {
     }
 
     @Test
-    void city_should_be_added_to_db_if_does_not_exist() throws Exception {
+    void cityShouldBeAddedToDbIfDoesNotExist() throws Exception {
         given(weatherCityDao.get(anyString())).willThrow(HibernateException.class);
         given(weatherCityApiService.getCityFromApi(eq("Minsk"))).willReturn(
                 new WeatherCity("Minsk", "snow",
